@@ -11,11 +11,15 @@ export class AppComponent {
   center : any;
   position : any;
   label :string;
+  coorC={lat: 45.5277388, lng: 9.1755484}
+  nome = 'casa'
+  
   constructor()
   {
     this.center={lat: 45.506738, lng: 9.190766};
     this.position = this.center;
     this.label = "ciao";
+  
   }
 
 }
