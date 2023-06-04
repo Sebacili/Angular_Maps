@@ -20,7 +20,7 @@ from flask_cors import CORS
 app = Flask(__name__)
 
 # Stringa di connessione al DB
-app.config["MONGO_URI"] = "mongodb+srv://S3ba26:Facebook2015@cluster0.ztaqymo.mongodb.net/" #Importante qui va specificato il nome del DB --> /Relab
+app.config["MONGO_URI"] = "mongodb+srv://S3ba26:Facebook2015@cluster0.ztaqymo.mongodb.net/Relab" #Importante qui va specificato il nome del DB --> /Relab
 
 mongo = PyMongo(app)
 # Per rispondere alle chiamate cross origin
