@@ -1,34 +1,51 @@
-# main.py
+# pip install Flask-PyMongo
+# pip install Flask
+# pip install dnspython 
+# npm install -g --force nodemon
+# pip install flask-cors
 
-from flask import Flask
-from flask import jsonify
-from flask import request
+# Import the Flask module that has been installed.
+from flask import Flask, send_file, jsonify, request
 from flask_pymongo import PyMongo
 from flask_cors import CORS
 
+# Creating a new "app" by using the Flask constructor. Passes __name__ as a parameter.
 app = Flask(__name__)
-
-# Stringa di connessione al DB
-app.config["MONGO_URI"] = "mongodb+srv://S3ba26:Facebook2015@cluster0.ztaqymo.mongodb.net/" #Importante qui va specificato il nome del DB
-
-mongo = PyMongo(app)
-# Per rispondere alle chiamate cross origin
-CORS(app)
 
 # Annotation that allows the function to be hit at the specific URL.
 @app.route("/")
 # Generic Python functino that returns "Hello world!"
-def index():
+def Hp():
     return "Hello world!"
+    
+    
+# Annotation that allows the function to be hit at the specific URL.
+# @app.route("/")
+# Generic Python functino that returns "Hello world!"
+# def Hp():
+#     return books()
 
-# Questa route effettua una find() su tutto il DB (si limita ai primi 100 risultati)
-@app.route('/addresses', methods=['GET'])
-def get_all_addresses():
-    mil4326WKT = mongo.db.MilWKT4326
-    output = []
-    for s in mil4326WKT.find().limit(100):
-        output.append(s['INDIRIZZO'])
-    return jsonify({'result': output})
+
+# Annotation that allows the function to be hit at the specific URL (/books).
+@app.route("/books")
+# Generic Python functino that returns books.json
+def books():
+    return send_file('/workspace/Angular_Maps/workingwithBackEnd/data/books.json')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # Checks to see if the name of the package is the run as the main package.
 if __name__ == "__main__":

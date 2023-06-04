@@ -1,8 +1,64 @@
 Come si raggiunge uno specifica collection su MongoDB?
 inserendo l' url di connessione
-//Che tipo di struttura dati ritorna una find? (nota che è un oggetto ciclabile)?       
 
-                                    
-
+//Che tipo di struttura dati ritorna una find? (nota che è un oggetto ciclabile)?      
 La variabile s contiene ogni cella dell'iterazione del ciclo. Che tipo di struttura dati contiene la variabile s? (nota che può essere acceduta con la notazione []
+La variabile "s" contiene un documento della collezione, che può essere acceduta tramite la notazione s["nomeCampo"]
+
 Se dovessi ottenere altri dati oltre all'indirizzo come faresti?
+se voglio ottenere il campo "nome" del documento, faccio s["nome"].
+
+
+
+Cosa contiene la variabile group? In che formato è rappresentata l'aggregazione?
+La variabile "group" contiene un oggetto di aggregazione MongoDB che raggruppa i documenti in base ai campi "SEZ" e "WKT", 
+poi calcola la media e la somma del campo "EP_H_ND" per ogni gruppo.
+
+Cosa contiene la variabile di ciclo s?
+il documento del risultato dell' aggregazione
+Con la notazione s['AVG'] otteniamo la media dei campi EP_H_ND, per quale motivo?
+Perchè s['AVG'] contiene la media dei valori del campo EP_H_ND.
+
+Considerando la nuova aggregazione, sono state aggiunte le variabili match e limit a cosa servono secondo te?
+La variabile match è utilizzata per filtrare i documenti in base alla condizione data,
+nel nostro caso vengono selezionati solo i documenti in cui il campo EP_H_ND è maggiore di 0.
+La variabile limit viene utilizzata appunto per limitare il numero di documenti ritornati dall'aggregazione. 
+Nel nostro caso vengono restituiti solo i primi 10 documenti.
+Come si converte un dato da WKT a geometry?
+utilizzando la libreria shapely
+Come si crea un nuovo oggetto GeoJson?
+con questo codice:
+g2 = geojson.Feature(geometry=g1, properties={'id':s['_id']['SEZ'], 'media':s['AVG'], 'somma':s['SUM'], 'sezione':s['_id']['SEZ']}) 
+
+Perché trasformiamo i dati in GeoJson?
+per la rappresentazione dei dati (e perchè è comodo)
+Cosa contiene il campo properties dell'oggetto GeoJson?
+ le proprietà associate alla geometria
+
+
+  13 cosa indica la quantità ep_h_nd
+  La quantità "EP_H_ND" indica l'energia prodotta oraria netta (EPH) per una determinata sezione (SEZ) e una geometria (WKT).
+
+  Perché abbiamo scelto di usare la quantità EP_H_ND?
+  per il calcolo delle medie e delle somme(?i dont know)
+  
+
+14. Scrivi l'aggregazione fatta in MongoDB anche in SQL
+
+potrebbe essere: 
+  SELECT SEZ, WKT, AVG(EP_H_ND) AS AVG, SUM(EP_H_ND) AS SUM
+FROM MilWKT4326
+WHERE EP_H_ND > 0
+GROUP BY SEZ, WKT,AVG,SUM
+LIMIT 10;
+
+Osservando la figura risultato e descrivi
+Cosa contiene l'oggetto FeatureCollection?
+geometrie e proprietà e il type
+
+Cosa contiene il vettore features?
+geometrie proprietà , media,somma e type
+
+cosa contiene l'oggetto properties dio ogni feature?
+
+id media sezione somma
